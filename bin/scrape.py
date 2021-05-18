@@ -157,14 +157,14 @@ def getDetailItem(html, url):
         # Brand
         brand_name= '',
         brand_url= '',
-        item_brand_name= '',
+        product_brand_name= '',
 
         # Items
-        item_name= '',
-        item_description= '',
-        item_url= url or '',
-        item_priceOriginal= 0,
-        item_priceSale= '',
+        product_name= '',
+        product_description= '',
+        product_url= url or '',
+        product_priceOriginal= 0,
+        product_priceSale= '',
 
         # Attributes
         promotion_codes= '',
@@ -178,12 +178,12 @@ def getDetailItem(html, url):
         images= '',
     )
 
-    productObj['item_name'] = html.select_one('.product-name').text.strip() or ''
-    productObj['item_description'] = html.select_one('div', {'itemprop' : 'description'}).text.strip() or ''
-    # BootzItems.itemName = html.select_one('.b-product-tile-link').text.strip() or None
-    # BootzItems.itemDescription = html.select_one('.b-details-content p').text.strip() or None
+    productObj['product_name'] = html.select_one('.product-name').text.strip() or ''
+    productObj['product_description'] = html.select_one('div', {'itemprop' : 'description'}).text.strip() or ''
+    # BootzItems.productName = html.select_one('.b-product-tile-link').text.strip() or None
+    # BootzItems.productDescription = html.select_one('.b-details-content p').text.strip() or None
     # symbols =  ['$', '€', '£']
-    # BootzItems.itemPriceOriginal = [x.strip(symbols) for x in html.select_one('.b-product-tile-price-item').text] or None
+    # BootzItems.productPriceOriginal = [x.strip(symbols) for x in html.select_one('.b-product-tile-price-product').text] or None
     print(productObj['item_name'])
     productsArr.append(productObj)
 
