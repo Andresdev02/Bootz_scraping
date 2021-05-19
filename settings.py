@@ -31,5 +31,6 @@ class DriverSettings():
     PATH = '/Applications/chromedriver'
     WAIT = 10
     OPTIONS = webdriver.ChromeOptions()
+    # OPTIONS.add_argument("--headless")
     OPTIONS.add_argument("user-agent={}".format(rotate_user_agent()))
     DRIVER = webdriver.Chrome(PATH, 0,OPTIONS)

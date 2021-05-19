@@ -24,12 +24,13 @@ from selenium.common.exceptions import NoSuchElementException
 global CurrentDriver
 start_time = time.time()
 productsArr = []
+ProductUrlsArr = []
 # ================================================= 
 # * CONSTANTS
 # ================================================= 
 PAGE_NR = 0
 WAIT = 10
-PRODUCT_URLS = []
+
 
 
 # ================================================= 
@@ -41,17 +42,19 @@ def incrementPageNr():
 
 def check_exists_by_selector(CurrentDriver, selector):
     try:
+        if(selector == ''):
+          return None  
         return CurrentDriver.find_element(By.CSS_SELECTOR, selector)
     except NoSuchElementException:
         return None
 
 def check_exists_by_selectors(CurrentDriver, selector):
     try:
+        if(selector == ''):
+          return None  
         return CurrentDriver.find_elements(By.CSS_SELECTOR, selector)
     except NoSuchElementException:
         return None
-
-
 
 def waitUntilLoaded(CurrentDriver, selector):
     try:
@@ -69,8 +72,6 @@ def waitUntilLoaded(CurrentDriver, selector):
 def getProducts(DRIVER , ScrapeSelectors):
     # ELEMENTS
     CurrentDriver = DRIVER
-
-
     try:
         waitUntilLoaded(CurrentDriver, ScrapeSelectors.PRODUCTS)
         # print('✅ PRODUCTS FOUND')
@@ -88,8 +89,8 @@ def getProducts(DRIVER , ScrapeSelectors):
             if(ScrapeSelectors.PRODUCT_URL):
                 product_url = product.find_element(
                     By.CSS_SELECTOR, ScrapeSelectors.PRODUCT_URL).get_attribute("href").strip()
-                PRODUCT_URLS.append(product_url)
-        print('URLS', len(PRODUCT_URLS))
+                ProductUrlsArr.append(product_url)
+        print('URLS', len(ProductUrlsArr))
         getNextPageProducts(CurrentDriver, ScrapeSelectors)
     except TimeoutException as e:
         print('❌ PRODUCTS NOT FOUND', e)
@@ -103,10 +104,14 @@ def getNextPageProducts(CurrentDriver,ScrapeSelectors ):
     if(page):
         page_btn = CurrentDriver.find_element(By.CSS_SELECTOR, ScrapeSelectors.PAGINATOR)
         try:
+            current_url = CurrentDriver.current_url
             page_btn.click()
             time.sleep(2)
-            getProducts(CurrentDriver, ScrapeSelectors )
-        except:
+            if(current_url == CurrentDriver.current_url):
+                raise Exception
+            else:
+                getProducts(CurrentDriver, ScrapeSelectors)
+        except Exception:
             elapsed_time = time.time() - start_time
             print('URLS DONE', time.strftime("%H:%M:%S", time.gmtime(elapsed_time)))
             getProductsDetail(CurrentDriver, ScrapeSelectors)
@@ -116,10 +121,10 @@ def getNextPageProducts(CurrentDriver,ScrapeSelectors ):
         getProductsDetail(CurrentDriver, ScrapeSelectors)
 
 def getProductsDetail(CurrentDriver, ScrapeSelectors):
-    for index,url in enumerate(PRODUCT_URLS):
+    for index,url in enumerate(ProductUrlsArr):
         print(index)
-        CurrentDriver.get(url)
         try:
+            CurrentDriver.get(url)
             check_exists_by_selector(CurrentDriver, ScrapeSelectors.PRODUCT_NAME)
             getDetail(CurrentDriver, ScrapeSelectors, url)
             print('✅ DONE WITH SCRAPING', CurrentDriver.title)
@@ -129,13 +134,16 @@ def getProductsDetail(CurrentDriver, ScrapeSelectors):
 
 def getDetail(CurrentDriver, ScrapeSelectors, url):
     product_price_sale = check_exists_by_selector(CurrentDriver, ScrapeSelectors.PRODUCT_PRICESALE)
+    product_image_urls = check_exists_by_selectors(CurrentDriver, ScrapeSelectors.PRODUCT_IMAGE_URLS)
     allSizes = check_exists_by_selectors(CurrentDriver, ScrapeSelectors.SIZES)
+    # Product Price
     if(product_price_sale):
         sale = True
         product_price_sale = float(check_exists_by_selector(CurrentDriver, ScrapeSelectors.PRODUCT_PRICESALE).get_attribute("textContent").strip().strip('€').strip().replace(',','.'))
     else:
         sale = False
         product_price_sale = None
+    # Sizes
     if(allSizes):
         sizesArr = []
         for size in allSizes:
@@ -143,12 +151,22 @@ def getDetail(CurrentDriver, ScrapeSelectors, url):
         sizesArr = list(dict.fromkeys(sizesArr))
     else: 
         sizesArr= None
+    available = False
+    if(sizesArr):
+        if(len(sizesArr) != 0 ):
+            available = True
+        else: 
+            available = False
+    # Image
+    if(product_image_urls):
+        product_image_urls_arr = []
+        for image_urls in product_image_urls:
+            if image_urls != None :
+                product_image_urls_arr.append(str(image_urls.get_attribute("data-src")))
+    else:
+        product_image_urls_arr = None
 
-    if(len(sizesArr) != 0 ):
-        available = True
-    else: 
-        available = False
-    
+
     productObj = dict(
         # Brand
         brand_name = ScrapeSelectors.BRAND_NAME,
@@ -163,7 +181,7 @@ def getDetail(CurrentDriver, ScrapeSelectors, url):
         product_price_sale =  product_price_sale,
         # Images
         product_images = check_exists_by_selector(CurrentDriver, ScrapeSelectors.PRODUCT_IMAGES) ,
-        product_image_urls = check_exists_by_selector(CurrentDriver, ScrapeSelectors.PRODUCT_IMAGE_URLS),
+        product_image_urls = product_image_urls_arr,
         # Attributes
         promotion_codes= check_exists_by_selector(CurrentDriver, ScrapeSelectors.PROMOTION_CODES),
         colors= check_exists_by_selector(CurrentDriver, ScrapeSelectors.COLORS),
@@ -172,3 +190,7 @@ def getDetail(CurrentDriver, ScrapeSelectors, url):
         sale= sale)
     productsArr.append(productObj)
 
+def resetUrls():
+    print("Reset urls")
+    global ProductUrlsArr
+    ProductUrlsArr = []

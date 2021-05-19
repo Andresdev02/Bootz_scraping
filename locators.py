@@ -55,8 +55,9 @@ def getSelectors():
 # =================================================
 class Torfs:
     BASEURL = 'https://www.torfs.be'
-    URL = 'https://www.torfs.be/nl/meisjes/schoenen/sneakers/?sz=100'
-    # URL = 'https://www.torfs.be/nl/heren/schoenen/sneakers/?sz=100'
+    URL = 'https://www.torfs.be/nl/outlet/meisjes/?sz=1'
+    # URL = 'https://www.torfs.be/nl/meisjes/schoenen/sneakers/?sz=1'
+    # URL = 'https://www.torfs.be/nl/meisjes/schoenen/sneakers/?sz=100'
     # URL = 'https://www.torfs.be/nl/outlet/heren/?sz=1'
     PAGE_NUMBER = 1
     CONTAINER = 'div.product-grid.search-products__products'
@@ -75,7 +76,7 @@ class Torfs:
     BRAND_URL = 'https://www.torfs.be'
     # IMAGES
     PRODUCT_IMAGES= ''
-    PRODUCT_IMAGE_URLS= ''
+    PRODUCT_IMAGE_URLS= '.slick-slide .carousel-item img.carousel-image'
     # ATTRIBUTES
     PROMOTION_CODES= ''
     COLORS= ''
@@ -84,20 +85,23 @@ class Torfs:
     SALE= False
 
 class Snipes:
-    BASEURL = 'https://www.snipes.be'
-    URL = 'https://www.snipes.be'
+    # BASEURL = 'https://www.snipes.be'
+    # URL = 'https://www.snipes.be'
+    
+    BASEURL = 'https://www.torfs.be'
+    URL = 'https://www.torfs.be/nl/meisjes/schoenen/sneakers/?sz=3'
     PAGE_NUMBER = 1
-    CONTAINER = '.CONTAINER_SNIPES'
+    CONTAINER = 'div.product-grid.search-products__products'
     PRODUCTS = '.product-tile'
     PRODUCT_URL = '.js-product-tile-link'
     COOKIE = '.js-cookieAccept'
-    PAGINATOR = 'a[data-page="0"]'
+    PAGINATOR = '.bs-next'
     # PRODUCTS
-    PRODUCT_BRAND_NAME = ''
+    PRODUCT_BRAND_NAME = '.brand-name'
     PRODUCT_NAME = '.product-name'
     PRODUCT_DESCRIPTION = 'div[itemprop="description"]'
-    PRODUCT_PRICEORIGINAL = ''
-    PRODUCT_PRICESALE = ''
+    PRODUCT_PRICEORIGINAL = 'span[itemprop="price"]'
+    PRODUCT_PRICESALE = '.price__list .value'
     # BRAND
     BRAND_NAME = 'Snipes'
     BRAND_URL = 'https://www.snipes.be'
