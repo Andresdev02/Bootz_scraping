@@ -55,19 +55,21 @@ def getSelectors():
 # =================================================
 class Torfs:
     BASEURL = 'https://www.torfs.be'
-    URL = 'https://www.torfs.be/nl/heren/schoenen/sneakers/?sz=50'
+    URL = 'https://www.torfs.be/nl/meisjes/schoenen/sneakers/?sz=100'
+    # URL = 'https://www.torfs.be/nl/heren/schoenen/sneakers/?sz=100'
+    # URL = 'https://www.torfs.be/nl/outlet/heren/?sz=1'
     PAGE_NUMBER = 1
     CONTAINER = 'div.product-grid.search-products__products'
     PRODUCTS = '.product-tile'
     PRODUCT_URL = '.js-product-tile-link'
     COOKIE = '.js-cookieAccept'
-    PAGINATOR = 'a[data-page="0"]'
+    PAGINATOR = '.bs-next'
     # PRODUCTS
-    PRODUCT_BRAND_NAME = ''
+    PRODUCT_BRAND_NAME = '.brand-name'
     PRODUCT_NAME = '.product-name'
     PRODUCT_DESCRIPTION = 'div[itemprop="description"]'
-    PRODUCT_PRICEORIGINAL = ''
-    PRODUCT_PRICESALE = ''
+    PRODUCT_PRICEORIGINAL = 'span[itemprop="price"]'
+    PRODUCT_PRICESALE = '.price__list .value'
     # BRAND
     BRAND_NAME = 'Torfs'
     BRAND_URL = 'https://www.torfs.be'
@@ -77,7 +79,7 @@ class Torfs:
     # ATTRIBUTES
     PROMOTION_CODES= ''
     COLORS= ''
-    SIZES= ''
+    SIZES= '.size-blocks .size-button:not(.disabled)'
     AVAILABLE= False
     SALE= False
 
