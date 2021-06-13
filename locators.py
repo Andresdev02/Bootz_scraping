@@ -22,6 +22,7 @@ class ScrapeSelectors:
         self.PAGINATOR = Selectors.PAGINATOR
         self.PRODUCT_BRAND_NAME = Selectors.PRODUCT_BRAND_NAME
         self.PRODUCT_NAME = Selectors.PRODUCT_NAME
+        self.PRODUCT_MODEL_NAME = Selectors.PRODUCT_MODEL_NAME
         self.PRODUCT_DESCRIPTION = Selectors.PRODUCT_DESCRIPTION
         self.PRODUCT_PRICEORIGINAL = Selectors.PRODUCT_PRICEORIGINAL
         self.PRODUCT_PRICESALE = Selectors.PRODUCT_PRICESALE
@@ -34,13 +35,15 @@ class ScrapeSelectors:
         self.SIZES = Selectors.SIZES
         self.AVAILABLE = Selectors.AVAILABLE
         self.SALE = Selectors.SALE
+        self.GENDER = Selectors.GENDER
 
 # ================================================= 
 # * FUNCTIONS
 # =================================================
 def setSelectors():
     selectors = []
-    selectors.append(ScrapeSelectors(Torfs))
+    selectors.append(ScrapeSelectors(TorfsMan))
+    selectors.append(ScrapeSelectors(TorfsWomen))
     # selectors.append(ScrapeSelectors(Snipes))
     return selectors
 
@@ -53,12 +56,9 @@ def getSelectors():
 # ================================================= 
 # * STORES
 # =================================================
-class Torfs:
+class TorfsMan:
     BASEURL = 'https://www.torfs.be'
-    URL = 'https://www.torfs.be/nl/outlet/meisjes/?sz=1'
-    # URL = 'https://www.torfs.be/nl/meisjes/schoenen/sneakers/?sz=1'
-    # URL = 'https://www.torfs.be/nl/meisjes/schoenen/sneakers/?sz=100'
-    # URL = 'https://www.torfs.be/nl/outlet/heren/?sz=1'
+    URL = 'https://www.torfs.be/nl/heren/schoenen/sneakers/?sz=100'
     PAGE_NUMBER = 1
     CONTAINER = 'div.product-grid.search-products__products'
     PRODUCTS = '.product-tile'
@@ -68,12 +68,13 @@ class Torfs:
     # PRODUCTS
     PRODUCT_BRAND_NAME = '.brand-name'
     PRODUCT_NAME = '.product-name'
+    PRODUCT_MODEL_NAME = '.attribute-modelName'
     PRODUCT_DESCRIPTION = 'div[itemprop="description"]'
     PRODUCT_PRICEORIGINAL = 'span[itemprop="price"]'
     PRODUCT_PRICESALE = '.price__list .value'
     # BRAND
     BRAND_NAME = 'Torfs'
-    BRAND_URL = 'https://www.torfs.be'
+    BRAND_URL = 'https://www.earnieland.be/media/3654/torfs.jpg'
     # IMAGES
     PRODUCT_IMAGES= ''
     PRODUCT_IMAGE_URLS= '.slick-slide .carousel-item img.carousel-image'
@@ -83,6 +84,37 @@ class Torfs:
     SIZES= '.size-blocks .size-button:not(.disabled)'
     AVAILABLE= False
     SALE= False
+    GENDER = 'man'
+
+class TorfsWomen:
+    BASEURL = 'https://www.torfs.be'
+    URL = 'https://www.torfs.be/nl/dames/schoenen/sneakers/?sz=100'
+    PAGE_NUMBER = 1
+    CONTAINER = 'div.product-grid.search-products__products'
+    PRODUCTS = '.product-tile'
+    PRODUCT_URL = '.js-product-tile-link'
+    COOKIE = '.js-cookieAccept'
+    PAGINATOR = '.bs-next'
+    # PRODUCTS
+    PRODUCT_BRAND_NAME = '.brand-name'
+    PRODUCT_NAME = '.product-name'
+    PRODUCT_MODEL_NAME = '.attribute-modelName'
+    PRODUCT_DESCRIPTION = 'div[itemprop="description"]'
+    PRODUCT_PRICEORIGINAL = 'span[itemprop="price"]'
+    PRODUCT_PRICESALE = '.price__list .value'
+    # BRAND
+    BRAND_NAME = 'Torfs'
+    BRAND_URL = 'https://www.earnieland.be/media/3654/torfs.jpg'
+    # IMAGES
+    PRODUCT_IMAGES= ''
+    PRODUCT_IMAGE_URLS= '.slick-slide .carousel-item img.carousel-image'
+    # ATTRIBUTES
+    PROMOTION_CODES= ''
+    COLORS= ''
+    SIZES= '.size-blocks .size-button:not(.disabled)'
+    AVAILABLE= False
+    SALE= False
+    GENDER = 'woman'
 
 class Snipes:
     # BASEURL = 'https://www.snipes.be'
@@ -99,6 +131,7 @@ class Snipes:
     # PRODUCTS
     PRODUCT_BRAND_NAME = '.brand-name'
     PRODUCT_NAME = '.product-name'
+    PRODUCT_MODEL_NAME = '.attribute-modelName'
     PRODUCT_DESCRIPTION = 'div[itemprop="description"]'
     PRODUCT_PRICEORIGINAL = 'span[itemprop="price"]'
     PRODUCT_PRICESALE = '.price__list .value'

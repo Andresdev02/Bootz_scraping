@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "696957653873",
+    "firebase_url": "https://bootz-59fbe-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "bootz-59fbe",
+    "storage_bucket": "bootz-59fbe.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:696957653873:android:4131b9636c11f3b2575cd0",
+        "android_client_info": {
+          "package_name": "com.app.bootz"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "696957653873-ls286ebe3sgnttkn56bhcln6mlgg77gc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.app.bootz",
+            "certificate_hash": "7f2f7681a884f3c86f8d82c820f81656d455c1f1"
+          }
+        },
+        {
+          "client_id": "696957653873-r1psfhii41k9c3lja5b0gjnnj4hp1aub.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDAW09iyLzHkFBsIGzWngsqNtoQhagHx5I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "696957653873-r1psfhii41k9c3lja5b0gjnnj4hp1aub.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "696957653873-spnqie2mjo9057070p03ao9or8j35in9.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.app.bootz"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
