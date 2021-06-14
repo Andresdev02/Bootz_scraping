@@ -10,7 +10,7 @@
 # *     -- MAIN.PY --
 # ========================================================================================================================================================================================================================================================================================================================================
 
-from settings import DriverSettings
+from scrape.settings import DriverSettings
 import psycopg2
 import time
 from selenium.webdriver.common.by import By
@@ -19,7 +19,10 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import NoSuchElementException
-
+import os
+from dotenv import load_dotenv
+load_dotenv()
+dbCredentials = os.environ.get("db-bootz")
 # =================================================
 # * VARIABLES
 # =================================================
@@ -108,8 +111,8 @@ def getProducts(DRIVER, ScrapeSelectors):
 def getNextPageProducts(CurrentDriver, ScrapeSelectors):
     incrementPageNr()
     page = check_exists_by_selector(CurrentDriver, ScrapeSelectors.PAGINATOR)
-    if(False):
-    # if(page):
+    # if(False):
+    if(page):
         page_btn = CurrentDriver.find_element(
             By.CSS_SELECTOR, ScrapeSelectors.PAGINATOR)
         try:
@@ -241,8 +244,7 @@ def resetUrls():
 # =================================================
 def connectToDB():
     try:
-        conn = psycopg2.connect(
-            "dbname='d2n2f9v3vubu6' user='kdbcwlijtpweyi' host='ec2-34-250-16-127.eu-west-1.compute.amazonaws.com' password='077ac9c59bff1cce464f689442ab6a1fc3d38b9f8b53b1bdf24195d6e1573ab4'")
+        conn = psycopg2.connect(dbCredentials)
     except:
         conn = False
     if(conn):

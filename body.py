@@ -10,12 +10,11 @@
 # *     -- BODY.PY --
 # ========================================================================================================================================================================================================================================================================================================================================
 
+from scrape.main import getProducts, insertIntoDb, resetUrls
 import time
 import psycopg2
-from settings import DriverSettings
-from locators import getSelectors
-from main import getProducts, insertIntoDb, resetUrls
-
+from scrape.settings import DriverSettings
+from scrape.locators import getSelectors
 # ================================================= 
 # * VARIABLES
 # ================================================= 
